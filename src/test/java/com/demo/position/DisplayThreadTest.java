@@ -1,9 +1,12 @@
 package com.demo.position;
 
+import com.demo.position.entity.Position;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DisplayThreadTest {
@@ -13,13 +16,12 @@ public class DisplayThreadTest {
         new DisplayThread(buildPositios()).display(buildRateWithUSD());
     }
 
-    private Map<String, Integer> buildPositios() {
-        Map<String, Integer> positions = new HashMap<>();
-        positions.put("CNY", 1000);
-        positions.put("HKD", 2000);
-        positions.put("GBP", 300);
-        positions.put("EUR",111);
-        positions.put("USD",22);
+    private List<Position> buildPositios() {
+        List<Position> positions = new ArrayList<>();
+        positions.add(new Position("CNY", 1000));
+        positions.add(new Position("HKD", 2000));
+        positions.add(new Position("GBP", 300));
+        positions.add(new Position("EUR", 111));
         return positions;
     }
 

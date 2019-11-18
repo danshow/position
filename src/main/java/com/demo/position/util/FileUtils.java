@@ -1,5 +1,6 @@
 package com.demo.position.util;
 
+import com.demo.position.entity.Position;
 import com.demo.position.exception.ParseException;
 
 import java.io.BufferedReader;
@@ -44,8 +45,7 @@ public class FileUtils {
         });
     }
 
-    public static Map<String, Integer> parsePosition(String line, Map<String, Integer> positions) {
-//        logger.debug("parse line : " + line);
+    public static void parsePosition(String line, List<Position> positions) {
         String tmp = line.trim();
         String[] items = line.split(" ");
         if (items.length != 2) {
@@ -56,7 +56,6 @@ public class FileUtils {
         if (PositionUtil.validateCurrency(currency) && amount != 0) {
             PositionUtil.calcPositions(currency, amount, positions);
         }
-        return positions;
     }
 
 

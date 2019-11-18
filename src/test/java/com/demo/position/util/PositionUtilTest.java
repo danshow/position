@@ -1,11 +1,12 @@
 package com.demo.position.util;
 
+import com.demo.position.entity.Position;
 import com.demo.position.exception.ValidationException;
 import junit.framework.Assert;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PositionUtilTest {
 
@@ -28,19 +29,19 @@ public class PositionUtilTest {
     }
 
     @Test
-    public void givenExistCnyShouldCalcTotal(){
-        Map<String,Integer> positions=new HashMap<>();
-        positions.put("HKD",100);
-        positions.put("GPB",100);
-        PositionUtil.calcPositions("HKD",22,positions);
-        Assert.assertEquals(Integer.valueOf(122),positions.get("HKD"));
+    public void givenExistCnyShouldCalcTotal() {
+        List<Position> positions = new ArrayList<>();
+        positions.add(new Position("HKD", 100));
+        PositionUtil.calcPositions("HKD", 22, positions);
+
+        Assert.assertEquals(122, positions.get(0).getAmount());
     }
+
     @Test
-    public void givenNewCnyShouldInPosition(){
-        Map<String,Integer> positions=new HashMap<>();
-        positions.put("HKD",100);
-        positions.put("GPB",100);
-        PositionUtil.calcPositions("EUR",22,positions);
-        Assert.assertEquals(Integer.valueOf(22),positions.get("EUR"));
+    public void givenNewCnyShouldInPosition() {
+        List<Position> positions = new ArrayList<>();
+        positions.add(new Position("HKD", 100));
+        PositionUtil.calcPositions("EUR", 22, positions);
+        Assert.assertEquals(22, positions.get(1).getAmount());
     }
 }

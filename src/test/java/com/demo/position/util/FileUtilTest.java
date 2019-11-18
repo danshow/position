@@ -1,16 +1,17 @@
 package com.demo.position.util;
 
+import com.demo.position.entity.Position;
 import com.demo.position.exception.ParseException;
 import com.demo.position.exception.ValidationException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FileUtilTest {
 
-    Map<String, Integer> positions = new HashMap<>();
+    List<Position> positions = new ArrayList<>();
 
     @Test(expected = ParseException.class)
     public void givenErrInputLineShouldReturnException() {
@@ -34,10 +35,12 @@ public class FileUtilTest {
 
     @Test
     public void parseCorrectPosition() {
+
         String line = "CNY 111";
-        Map<String, Integer> pos = FileUtils.parsePosition(line, positions);
-        Assert.assertTrue(positions.containsKey("CNY"));
-        Assert.assertEquals(Integer.valueOf(111), positions.get("CNY"));
+        FileUtils.parsePosition(line, positions);
+        Position position = positions.get(0);
+        Assert.assertEquals("CNY", position.getCurrencyCode());
+        Assert.assertEquals(111, position.getAmount());
     }
 
 

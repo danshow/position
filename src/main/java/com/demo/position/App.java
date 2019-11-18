@@ -1,13 +1,17 @@
 package com.demo.position;
 
-import com.demo.position.util.FileUtils;
+import com.demo.position.entity.Position;
 import com.demo.position.exception.ParseException;
 import com.demo.position.exception.ValidationException;
+import com.demo.position.util.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -18,8 +22,9 @@ import java.util.concurrent.locks.ReentrantLock;
  */
 public class App {
 
-    private static Map<String, Integer> positions = new HashMap<>();
-    static ThreadLocal<Map> threadLocal = new InheritableThreadLocal<>();
+
+    private static List<Position> positions = new ArrayList<>();
+    static ThreadLocal<List<Position>> threadLocal = new InheritableThreadLocal<>();
     private static final Logger logger = LoggerFactory.getLogger(App.class);
     static Lock lock = new ReentrantLock();
 
@@ -38,6 +43,7 @@ public class App {
                 try {
                     String line = getInput();
                     FileUtils.parsePosition(line, positions);
+                    System.out.println("positions" + positions);
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
                 } catch (NumberFormatException nfe) {

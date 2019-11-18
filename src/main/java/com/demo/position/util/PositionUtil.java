@@ -1,9 +1,14 @@
 package com.demo.position.util;
 
+import com.demo.position.entity.Position;
 import com.demo.position.exception.ValidationException;
 
 import java.math.BigDecimal;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class PositionUtil {
 
@@ -35,12 +40,24 @@ public class PositionUtil {
         return true;
     }
 
-    protected static void calcPositions(String currency, int amount, Map<String, Integer> positions) {
-        if (positions.containsKey(currency)) {
-            int value = positions.get(currency) + amount;
-            positions.put(currency, value);
+    protected static void calcPositions(String currency, int amount, List<Position> positions) {
+
+        Iterator<Position> iterator = positions.iterator();
+        boolean flag = false;
+        int currAmt = 0;
+        while (iterator.hasNext()) {
+            Position position = iterator.next();
+            if (currency.equalsIgnoreCase(position.getCurrencyCode())) {
+                iterator.remove();
+                flag = true;
+                currAmt = position.getAmount();
+                System.out.println("calc " + currency);
+            }
+        }
+        if (flag == false) {
+            positions.add(new Position(currency, amount));
         } else {
-            positions.put(currency, amount);
+            positions.add(new Position(currency, currAmt + amount));
         }
 
     }
