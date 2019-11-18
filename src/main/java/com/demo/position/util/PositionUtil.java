@@ -1,8 +1,9 @@
-package com.demo.poistion.util;
+package com.demo.position.util;
 
 import com.demo.position.exception.ValidationException;
 
 import java.math.BigDecimal;
+import java.util.Map;
 
 public class PositionUtil {
 
@@ -18,7 +19,7 @@ public class PositionUtil {
 
     public static boolean validateCurrency(String currency) {
 
-        if (currency.length() != 3 && !isStringUpper(currency)) {
+        if (currency.length() != 3 || (!isStringUpper(currency))) {
             throw new ValidationException("validate currency exception!");
         }
         return true;
@@ -32,5 +33,15 @@ public class PositionUtil {
             }
         }
         return true;
+    }
+
+    protected static void calcPositions(String currency, int amount, Map<String, Integer> positions) {
+        if (positions.containsKey(currency)) {
+            int value = positions.get(currency) + amount;
+            positions.put(currency, value);
+        } else {
+            positions.put(currency, amount);
+        }
+
     }
 }
